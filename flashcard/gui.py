@@ -16,7 +16,7 @@ class FlashcardApp:
         self.current_card = None
         self.difficulty = "easy"
 
-        # Tabs setup
+        
         notebook = ttk.Notebook(root)
         self.quiz_frame = tk.Frame(notebook, bg="#f0f0f0")
         self.add_frame = tk.Frame(notebook, bg="#f0f0f0")
@@ -31,42 +31,41 @@ class FlashcardApp:
         """Build the flashcard UI components."""
         padding = {'padx': 10, 'pady': 5}
 
-        # Label for topic
+        
         ttk.Label(self.quiz_frame, text="Select Topic:", font=("Arial", 14), background="#f0f0f0").pack(**padding)
 
-        # ComboBox for selecting topic
+        
         self.subject_var = tk.StringVar()
         self.subject_menu = ttk.Combobox(self.quiz_frame, textvariable=self.subject_var, state="readonly", font=("Arial", 12))
         self.subject_menu["values"] = get_topics(self.data)
         self.subject_menu.pack(**padding)
 
-        # Label for difficulty
+        
         ttk.Label(self.quiz_frame, text="Select Difficulty:", font=("Arial", 14), background="#f0f0f0").pack(**padding)
 
-        # ComboBox for selecting difficulty
+
         self.difficulty_var = tk.StringVar()
         self.difficulty_menu = ttk.Combobox(self.quiz_frame, textvariable=self.difficulty_var, state="readonly", font=("Arial", 12))
         self.difficulty_menu["values"] = ["easy", "medium", "hard"]
         self.difficulty_menu.set(self.difficulty)
         self.difficulty_menu.pack(**padding)
 
-        # Start button
+
         self.start_button = ttk.Button(self.quiz_frame, text="Start Flashcards", command=self.start_flashcards)
         self.start_button.pack(**padding)
 
-        # Question label
         self.question_label = tk.Label(self.quiz_frame, text="", font=("Arial", 16), wraplength=400, bg="#f0f0f0")
         self.question_label.pack(pady=20)
 
-        # Show answer button
+
         self.show_answer_button = ttk.Button(self.quiz_frame, text="Show Answer", command=self.show_answer, state=tk.DISABLED)
         self.show_answer_button.pack(pady=10)
 
-        # Answer label (initially empty)
+
         self.answer_label = tk.Label(self.quiz_frame, text="", font=("Arial", 14), wraplength=400, bg="#f0f0f0")
         self.answer_label.pack(pady=10)
 
-        # Next Question button
+
         self.next_button = ttk.Button(self.quiz_frame, text="Next Question", command=self.next_question, state=tk.DISABLED)
         self.next_button.pack(pady=10)
 
@@ -105,17 +104,16 @@ class FlashcardApp:
             messagebox.showwarning("Choose Topic", "Please select a valid topic.")
             return
 
-        # Get selected difficulty
+     
         self.difficulty = self.difficulty_var.get()
 
-        # Filter cards based on topic and difficulty
         self.cards = self.filter_cards_by_topic_and_difficulty(self.data[subject])
         
         if not self.cards:
             messagebox.showinfo("No Cards", "No flashcards in this topic and difficulty level.")
             return
 
-        # Shuffle the questions randomly
+    
         random.shuffle(self.cards)
         
         self.index = 0
@@ -179,25 +177,24 @@ class FlashcardApp:
         answer = self.new_answer_entry.get().strip()
         difficulty = self.new_difficulty_var.get().strip()
 
-        # Check if all fields are filled
+     
         if not topic or not question or not answer or not difficulty:
             messagebox.showwarning("Missing Info", "Please fill all fields.")
             return
 
-        # Add the new flashcard to the data structure
+           
         if topic not in self.data:
             self.data[topic] = {'easy': [], 'medium': [], 'hard': []}
 
         self.data[topic][difficulty].append({"question": question, "answer": answer})
-
-        # Save the updated data to the JSON file (no need to pass topic, question, etc.)
+     
         save_flashcard(self.data)
 
-        # Refresh dropdowns (to reflect newly added topic)
+    
         self.subject_menu["values"] = get_topics(self.data)
         self.new_topic_entry["values"] = get_topics(self.data)
 
-        # Clear the input fields
+        
         self.new_question_entry.delete(0, tk.END)
         self.new_answer_entry.delete(0, tk.END)
 

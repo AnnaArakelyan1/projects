@@ -118,7 +118,7 @@ class FlashcardApp:
         
         self.index = 0
         self.show_answer_button.config(state=tk.NORMAL)
-        self.next_button.config(state=tk.DISABLED)  # Disable Next button initially
+        self.next_button.config(state=tk.DISABLED)  
         self.show_question()
 
 
@@ -131,27 +131,27 @@ class FlashcardApp:
         if self.index < len(self.cards):
             self.current_card = self.cards[self.index]
             self.question_label.config(text=f"Q{self.index + 1}: {self.current_card['question']}")
-            self.answer_label.config(text="")  # Clear the answer label
+            self.answer_label.config(text="")  
         else:
-            self.end_flashcards()  # End the flashcard session when the index exceeds the length
+            self.end_flashcards() 
 
     def show_answer(self):
         """Display the answer to the current question."""
         if self.current_card:
             self.answer_label.config(text=f"Answer: {self.current_card['answer']}")
-            self.show_answer_button.config(state=tk.DISABLED)  # Disable the "Show Answer" button after showing the answer
-            self.next_button.config(state=tk.NORMAL)  # Enable the "Next Question" button after showing the answer
+            self.show_answer_button.config(state=tk.DISABLED)  
+            self.next_button.config(state=tk.NORMAL)  
     
     def next_question(self):
         """Move to the next question."""
-        self.index += 1  # Move to the next flashcard
+        self.index += 1  
         if self.index < len(self.cards):
             self.show_question()  # Show the next question
-            self.show_answer_button.config(state=tk.NORMAL)  # Enable the "Show Answer" button for the next question
-            self.answer_label.config(text="")  # Clear the answer label for the new question
-            self.next_button.config(state=tk.DISABLED)  # Disable the "Next Question" button until the answer is shown
+            self.show_answer_button.config(state=tk.NORMAL)   
+            self.answer_label.config(text="")  
+            self.next_button.config(state=tk.DISABLED) 
         else:
-            self.end_flashcards()  # End the flashcards session when all questions are done
+            self.end_flashcards()  
 
 
 
@@ -167,7 +167,7 @@ class FlashcardApp:
         self.cards = []
         self.index = 0
         self.current_card = None
-        self.show_answer_button.config(state=tk.DISABLED)  # Disable "Show Answer" button after the session
+        self.show_answer_button.config(state=tk.DISABLED) 
 
 
     def save_flashcard(self):
